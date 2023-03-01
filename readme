@@ -1,0 +1,78 @@
+HOW TO RUN FOR SINGLE BAM FILE:
+
+0. The BAM files are located in the folder /data/
+
+1. For each BAM file we need to create an index with the following command:
+
+samtools index I2367_rmdup.bam
+
+2. After the index is created, we sort the BAM file with the following command
+(probably not necessary procedure):
+
+samtools sort I2367_rmdup.bam
+
+3. Creating the 3-channel genetic images.
+
+for one file:
+python preprocessing_single.py opens one BAM file indicated in the __main__
+function and returns 100 images (the parameters config['count'] and config['filename']
+are responsible for the number of images and the filename to analyze)
+
+for folder:
+
+python preprocessing.py  --folder_in "/home/max/Desktop/DNA/data" --folder_out "/home/max/Desktop/DNA/output/new_images"
+folder_in - the folder where bam files are located
+folder_out  -the folder where the results are stored
+
+4. Script color_vizualization returns the colors and its frequency in one file  as solid
+images of specific color and the frequency as an image title
+
+5. The ML algorithm:
+- Reads images from all the subfolder of the folder output.
+- Performs ML prediction based on the images
+to run algorithm : image_regression.py
+Inside of the file indicate the images file, and CONFIG.
+
+
+
+
+FILES DESCRIPTION:
+
+- dataloader.py           -  routines responsible for loading the data.
+- image_regression.py     - creates an experiment.
+- preprocessing_single.py - preprocesses single BAM file
+- preprocessing.py        - preprocessing folder of BAM files:
+- model.py                - the model architecture
+- dataloader.py           - the dataloader that loads the data (automatically executed from image_regression.py during prediction)
+- clean_image.py          - cleaning the images (creating certain number of files) after the preprocessing.py
+- logger.py               - utilities file corresponding to the logging.
+- meteo_test.py           - testing of the extracting the meteo data
+- sort_bams.py            - TEMPORARY EXPERIMENT FILE
+- color_visualization.py  - the visulaziation of the different colors of patch_images
+
+HOW TO RUN (FOLDERS OF BAM file):
+
+1. Determine the folder for the BAM files and empty folder for IMAGE files.
+
+2. RUN the preprocessing.py to analyze the BAM files and create image files:
+python preprocessing.py  --folder_in "path_to_BAM" --folder_out "path_to_IMAGES"
+
+3. RUN the clean_image.py file. Indicate the target label and target image files inside of the clean_image script.
+python clean_image.py
+
+4. RUN  model.py. Indicate the input/output folders, experiment folders, etc in CONFIG file.
+python model.py
+
+
+
+
+
+
+*Important: The number of images for each of the BAM files should be no less than the specified number
+
+
+
+#############################################################
+#############################################################
+
+

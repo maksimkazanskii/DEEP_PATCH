@@ -1,0 +1,10 @@
+num_epochs,100
+batch_size,8
+val_split_ratio,0.67
+PATH_MODELS,../experiments/
+EXP_NAME,example_classification
+image_folder,../../images_clean
+label_file,../../labels/labels.csv
+lr,0.001
+logging,True
+folder,../experiments/exp_35files
